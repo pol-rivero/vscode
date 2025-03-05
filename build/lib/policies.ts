@@ -42,7 +42,7 @@ interface Policy {
 	renderADMX(regKey: string): string[];
 	renderADMLStrings(translations?: LanguageTranslations): string[];
 	renderADMLPresentation(): string;
-	renderProfile(): string;
+	renderProfile(): string[];
 	// https://github.com/ProfileManifests/ProfileManifests/wiki/Manifest-Format
 	renderProfileManifest(translations?: LanguageTranslations): string;
 }
@@ -125,8 +125,7 @@ abstract class BasePolicy implements Policy {
 	protected abstract renderADMLPresentationContents(): string;
 
 	renderProfile() {
-		return `			<key>${this.name}</key>
-			${this.renderProfileValue()}`;
+		return [`<key>${this.name}</key>`, this.renderProfileValue()];
 	}
 
 	renderProfileManifest(translations?: LanguageTranslations): string {
@@ -339,7 +338,7 @@ class ObjectPolicy extends BasePolicy {
 	}
 
 	renderProfileValue(): string {
-		return `<string>${this.name}</string>`;
+		return `<string></string>`;
 	}
 
 	renderProfileManifestValue(translations?: LanguageTranslations): string {
@@ -836,9 +835,12 @@ function renderMacOSPolicy(policies: Policy[], translations: Translations) {
 	const versions = [...new Set(policies.map(p => p.minimumVersion)).values()].sort();
 	const categories = [...new Set(policies.map(p => p.category))];
 
-	const policyEntries = policies.map(policy => policy.renderProfile())
-		.filter(Boolean)
-		.join('\n');
+	const policyEntries =
+		policies.map(policy => policy.renderProfile())
+			.flat()
+			.map(entry => `\t\t\t\t${entry}`)
+			.join('\n');
+
 
 	return {
 		profile: `<?xml version="1.0" encoding="UTF-8"?>
@@ -863,7 +865,7 @@ function renderMacOSPolicy(policies: Policy[], translations: Translations) {
 				<string>${contentUUID}</string>
 				<key>PayloadVersion</key>
 				<integer>1</integer>
-				${policyEntries}
+${policyEntries}
 			</dict>
 		</array>
 		<key>PayloadDescription</key>
