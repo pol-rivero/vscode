@@ -237,7 +237,8 @@ export function useWindowControlsOverlay(configurationService: IConfigurationSer
 		return false; // only supported when title bar is custom
 	}
 
-	return true; // default
+	// TODO: This does not work because the configuration service is not yet initialized
+	return configurationService.getValue<boolean>(TitleBarSetting.CUSTOM_TITLE_BAR_CONTROLS);
 }
 
 export function useNativeFullScreen(configurationService: IConfigurationService): boolean {
