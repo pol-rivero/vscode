@@ -172,6 +172,7 @@ export interface IDensitySettings {
 export const enum TitleBarSetting {
 	TITLE_BAR_STYLE = 'window.titleBarStyle',
 	CUSTOM_TITLE_BAR_VISIBILITY = 'window.customTitleBarVisibility',
+	CUSTOM_TITLE_BAR_CONTROLS = 'window.customTitleBarControls',
 }
 
 export const enum TitlebarStyle {
