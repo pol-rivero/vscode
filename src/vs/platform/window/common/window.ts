@@ -201,6 +201,10 @@ export function hasNativeTitlebar(configurationService: IConfigurationService, t
 	return titleBarStyle === TitlebarStyle.NATIVE;
 }
 
+export function showTitlebarControls(configurationService: IConfigurationService): boolean {
+	return configurationService.getValue<boolean>(TitleBarSetting.SHOW_TITLE_BAR_CONTROLS) ?? true;
+}
+
 export function getTitleBarStyle(configurationService: IConfigurationService): TitlebarStyle {
 	if (isWeb) {
 		return TitlebarStyle.CUSTOM;
@@ -238,7 +242,7 @@ export function useWindowControlsOverlay(configurationService: IConfigurationSer
 		return false; // only supported when title bar is custom
 	}
 
-	return configurationService.getValue<boolean>(TitleBarSetting.SHOW_TITLE_BAR_CONTROLS) ?? true;
+	return showTitlebarControls(configurationService);
 }
 
 export function useNativeFullScreen(configurationService: IConfigurationService): boolean {
