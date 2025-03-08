@@ -46,7 +46,7 @@ export const enum LayoutSettings {
 	EDITOR_ACTIONS_LOCATION = 'workbench.editor.editorActionsLocation',
 	COMMAND_CENTER = 'window.commandCenter',
 	LAYOUT_ACTIONS = 'workbench.layoutControl.enabled',
-	WINDOW_CONTROLS = 'window.customTitleBarControls'
+	WINDOW_CONTROLS = 'window.showTitleBarControls'
 }
 
 export const enum ActivityBarPosition {
