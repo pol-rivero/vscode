@@ -482,9 +482,7 @@ export class BrowserTitlebarPart extends Part implements ITitlebarPart {
 				// for something, except for web where a custom menu being supported). not putting the
 				// container helps with allowing to move the window when clicking very close to the
 				// window control buttons.
-			} else if (!showTitlebarControls(this.configurationService)) {
-				// Disabled by the user
-			} else {
+			} else if (showTitlebarControls(this.configurationService)) {
 				const windowControlsContainer = append(primaryWindowControlsLocation === 'left' ? this.leftContent : this.rightContent, $('div.window-controls-container'));
 				if (isWeb) {
 					// Web: its possible to have control overlays on both sides, for example on macOS
